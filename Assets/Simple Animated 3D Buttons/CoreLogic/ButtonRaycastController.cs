@@ -16,7 +16,6 @@ public class ButtonRaycastController : MonoBehaviour {
 	private GameObject currentButtonHit;
 	void Start () 
 	{
-		
 	}
 	
 	void Update () 

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using System.Net.Http;
+using System.Threading.Tasks;
 
 public class ButtonLogic : MonoBehaviour {
 
@@ -27,7 +28,7 @@ public class ButtonLogic : MonoBehaviour {
 	private float buttonTravelDistance = 50f;
 	private float currentDestination = 0;
 	private Vector3 startPos;
-
+	static HttpClient client = new HttpClient();
 
 
 
@@ -38,7 +39,7 @@ public class ButtonLogic : MonoBehaviour {
 		{
 			startPos = buttonMeshObject.transform.localPosition;
 		}
-
+		
 		//gameObject.tag = "button3D"; //This is required if the tag based solution is selected. Can be disabled once it has been set, it's simply just to ensure that the user (you), is aware of this tag's importance.
 
 	}
@@ -49,7 +50,14 @@ public class ButtonLogic : MonoBehaviour {
 	public void OnClick()
 	{
 		MethodsToCallMouseDown.Invoke();
-		if(buttonMeshObject != null)
+		var mycolor = gameObject.transform.GetChild(1).gameObject.GetComponent<Renderer>().material.color;
+		Debug.Log("Hello:" + ColorUtility.ToHtmlStringRGB(mycolor));
+		var newcolor = ColorUtility.ToHtmlStringRGB(mycolor);
+		var stringContent = new StringContent(newcolor);
+		sendAPICall(stringContent);
+		
+
+		if (buttonMeshObject != null)
 		{
 			StartCoroutine("AnimateButtonDown");
 		}
@@ -62,6 +70,16 @@ public class ButtonLogic : MonoBehaviour {
 	{
 		MethodsToCallMouseUp.Invoke();
 
+	}
+	public async void sendAPICall(StringContent mycolor)
+	{
+		HttpResponseMessage response = await client.PostAsync(
+				"http://192.168.168.168:5000/rgb/", mycolor);
+		response.EnsureSuccessStatusCode();
+
+		// return URI of the created resource.
+
+		Debug.Log("Response:" + response.Headers.Location);
 	}
 	public void ButtonNoLongerPressed()
 	{
