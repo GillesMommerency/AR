@@ -99,7 +99,7 @@ public class ButtonLogic : MonoBehaviour
 	public async void sendAPICall(string mycolor)
 	{
 		HttpResponseMessage response = await client.GetAsync(
-				"http://192.168.168.168:5000/rgb/" + mycolor);
+				"http://192.168.0.135:5000/rgb/" + mycolor);
 		response.EnsureSuccessStatusCode();
 
 		// return URI of the created resource.
