@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Net.Http;
 using System.Threading.Tasks;
+using UnityEngine.UI;
+using System;
+using UnityEngine.Audio;
 
 public class ButtonLogic : MonoBehaviour
 {
@@ -27,25 +30,23 @@ public class ButtonLogic : MonoBehaviour
 	private float upTravelSpeed = 0.01f;
 	[SerializeField]
 	private float buttonTravelDistance = 50f;
-	private float currentDestination = 0;
 	private Vector3 startPos;
 	static HttpClient client = new HttpClient();
 	[SerializeField]
 	public static bool aanUit { get; set; }
+	public AudioSource clickButton;
 
-
-
-
+	
 	// Use this for initialization
 	void Start()
 	{
-		
+	
 		if (buttonMeshObject != null)
 		{
 			startPos = buttonMeshObject.transform.localPosition;
 		}
 
-		//gameObject.tag = "button3D"; //This is required if the tag based solution is selected. Can be disabled once it has been set, it's simply just to ensure that the user (you), is aware of this tag's importance.
+	
 
 	}
 
@@ -56,7 +57,9 @@ public class ButtonLogic : MonoBehaviour
 	{
 
 		MethodsToCallMouseDown.Invoke();
-		if (gameObject.name == "Switcher Variant") {
+		//clickButton.Play();
+		if (gameObject.name == "Switcher Variant")
+		{
 			Debug.Log("Switchieeeeeeeeeeeeeeee");
 			if (aanUit == true)
 			{
@@ -73,12 +76,13 @@ public class ButtonLogic : MonoBehaviour
 		}
 		else
 		{
-			if (aanUit == true) { 
-			var mycolor = gameObject.transform.GetChild(1).gameObject.GetComponent<Renderer>().material.color;
-			Debug.Log("Hello:" + ColorUtility.ToHtmlStringRGB(mycolor));
-			var newcolor = ColorUtility.ToHtmlStringRGB(mycolor);
-			//var stringContent = JsonSerializer.Serialize(newcolor);
-			sendAPICall(newcolor);
+			if (aanUit == true)
+			{
+				var mycolor = gameObject.transform.GetChild(1).gameObject.GetComponent<Renderer>().material.color;
+				Debug.Log("Hello:" + ColorUtility.ToHtmlStringRGB(mycolor));
+				var newcolor = ColorUtility.ToHtmlStringRGB(mycolor);
+				//var stringContent = JsonSerializer.Serialize(newcolor);
+				sendAPICall(newcolor);
 			}
 		}
 
@@ -106,6 +110,17 @@ public class ButtonLogic : MonoBehaviour
 
 		Debug.Log("Response:" + response.Headers.Location);
 	}
+
+	public async void sendBrightnessCall(int brightness)
+	{
+		HttpResponseMessage response = await client.GetAsync(
+				"http://192.168.0.135:5000/brightness/" + brightness);
+		response.EnsureSuccessStatusCode();
+
+		// return URI of the created resource.
+
+		Debug.Log("Response:" + response.Headers.Location);
+	}
 	public void ButtonNoLongerPressed()
 	{
 		Debug.Log("Check");
@@ -114,7 +129,16 @@ public class ButtonLogic : MonoBehaviour
 			StartCoroutine("AnimateButtonUp");
 		}
 	}
+	public void onValueChange(Slider slider)
+	{
+		if (aanUit == true)
+        {
+			//Debug.Log("Jis aan:" + slider.value);
+			var brightness = Convert.ToInt32(slider.value);
+			sendBrightnessCall(brightness);
 
+		}
+	}
 
 	IEnumerator AnimateButtonDown()
 	{
@@ -139,5 +163,6 @@ public class ButtonLogic : MonoBehaviour
 		}
 		buttonMeshObject.transform.localPosition = startPos;
 	}
-	
+
+
 }
