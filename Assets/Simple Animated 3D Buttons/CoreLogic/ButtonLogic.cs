@@ -34,9 +34,9 @@ public class ButtonLogic : MonoBehaviour
 	static HttpClient client = new HttpClient();
 	[SerializeField]
 	public static bool aanUit { get; set; }
+	public AudioSource clickButton;
 
-
-
+	
 	// Use this for initialization
 	void Start()
 	{
@@ -44,7 +44,6 @@ public class ButtonLogic : MonoBehaviour
 		if (buttonMeshObject != null)
 		{
 			startPos = buttonMeshObject.transform.localPosition;
-			
 		}
 
 	
@@ -58,7 +57,7 @@ public class ButtonLogic : MonoBehaviour
 	{
 
 		MethodsToCallMouseDown.Invoke();
-	
+		clickButton.Play();
 		if (gameObject.name == "Switcher Variant")
 		{
 			Debug.Log("Switchieeeeeeeeeeeeeeee");

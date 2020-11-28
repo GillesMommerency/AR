@@ -376,7 +376,7 @@ MonoBehaviour:
   downTravelSpeed: 1
   upTravelSpeed: 0.01
   buttonTravelDistance: 50
-  audioData: {fileID: 0}
+  clickButton: {fileID: 646021491}
 --- !u!82 &646021491
 AudioSource:
   m_ObjectHideFlags: 0
@@ -388,7 +388,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a8689bc752fefb24a97de7a636d62bf5, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -772,6 +772,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2471277801105931124, guid: 61f0b25ccdac0d847b21160c7f6269da,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 646021491}
     - target: {fileID: 2471277801779879595, guid: 61f0b25ccdac0d847b21160c7f6269da,
         type: 3}
       propertyPath: MethodsToCallMouseDown.m_PersistentCalls.m_Calls.Array.size
@@ -812,6 +817,31 @@ PrefabInstance:
       propertyPath: MethodsToCallMouseDown.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 4300002, guid: 6a9735e7db76a1b4083aecf3819ba5a3, type: 3}
+    - target: {fileID: 2471277801779879595, guid: 61f0b25ccdac0d847b21160c7f6269da,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 646021491}
+    - target: {fileID: 2471277801906246816, guid: 61f0b25ccdac0d847b21160c7f6269da,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 646021491}
+    - target: {fileID: 2471277801929066376, guid: 61f0b25ccdac0d847b21160c7f6269da,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 646021491}
+    - target: {fileID: 2471277802645181445, guid: 61f0b25ccdac0d847b21160c7f6269da,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 646021491}
+    - target: {fileID: 2471277802792707193, guid: 61f0b25ccdac0d847b21160c7f6269da,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 646021491}
     - target: {fileID: 2577177304089078583, guid: 61f0b25ccdac0d847b21160c7f6269da,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -846,6 +876,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1344884348, guid: 3854e780c449a3449b26cf2ce75b7bce, type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 646021491}
     - target: {fileID: 7477501799404994474, guid: 3854e780c449a3449b26cf2ce75b7bce,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -957,6 +991,7 @@ GameObject:
   - component: {fileID: 1114040584}
   - component: {fileID: 1114040583}
   - component: {fileID: 1114040582}
+  - component: {fileID: 1114040586}
   m_Layer: 0
   m_Name: AR Camera
   m_TagString: MainCamera
@@ -1069,6 +1104,14 @@ Transform:
   m_Father: {fileID: 40919616}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &1114040586
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114040580}
+  m_Enabled: 1
 --- !u!1 &1187531852
 GameObject:
   m_ObjectHideFlags: 0
