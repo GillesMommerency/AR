@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine.UI;
 using System;
 using UnityEngine.Audio;
+using UnityEngine.XR.ARFoundation;
 
 public class ButtonLogic : MonoBehaviour
 {
@@ -25,28 +26,37 @@ public class ButtonLogic : MonoBehaviour
 	[SerializeField]
 	private GameObject buttonMeshObject;
 	[SerializeField]
+	private GameObject buttonSwitchObject;
+	[SerializeField]
 	private float downTravelSpeed = 1f;
+	[SerializeField]
+	private float downTravelSpeedSwitch = 0.01f;
 	[SerializeField]
 	private float upTravelSpeed = 0.01f;
 	[SerializeField]
 	private float buttonTravelDistance = 50f;
+	private float switchTravelDistance = 0.045f;
 	private Vector3 startPos;
+	private Vector3 startPosSwitch;
 	static HttpClient client = new HttpClient();
 	[SerializeField]
 	public static bool aanUit { get; set; }
 	public AudioSource clickButton;
-
 	
-	// Use this for initialization
-	void Start()
+
+    // Use this for initialization
+    void Start()
 	{
 	
 		if (buttonMeshObject != null)
 		{
 			startPos = buttonMeshObject.transform.localPosition;
 		}
+		if (buttonSwitchObject != null)
+		{
+			startPosSwitch = buttonSwitchObject.transform.localPosition;
+		}
 
-	
 
 	}
 
@@ -60,15 +70,18 @@ public class ButtonLogic : MonoBehaviour
 		clickButton.Play();
 		if (gameObject.name == "Switcher Variant")
 		{
+			
 			Debug.Log("Switchieeeeeeeeeeeeeeee");
 			if (aanUit == true)
 			{
+				StartCoroutine("AnimateSwitchDown");
 				aanUit = false;
 				var newcolor = "000000";
 				sendAPICall(newcolor);
 			}
 			else if (aanUit == false)
 			{
+				StartCoroutine("AnimateSwitchUp");
 				aanUit = true;
 				var newcolor = "FFFFFF";
 				sendAPICall(newcolor);
@@ -162,6 +175,27 @@ public class ButtonLogic : MonoBehaviour
 			yield return null;
 		}
 		buttonMeshObject.transform.localPosition = startPos;
+	}
+
+	IEnumerator AnimateSwitchDown()
+	{
+		float travelled = 0;
+		while (travelled < switchTravelDistance)
+		{
+			travelled += downTravelSpeedSwitch;
+			buttonSwitchObject.transform.localPosition -= new Vector3(0, 0, 1) * downTravelSpeedSwitch;
+			yield return null;
+		}
+	}
+	IEnumerator AnimateSwitchUp()
+	{
+		float travelled = 0;
+		while (travelled < switchTravelDistance)
+		{
+			travelled += upTravelSpeed;
+			buttonSwitchObject.transform.localPosition += new Vector3(0, 0, 1) * upTravelSpeed;
+			yield return null;
+		}
 	}
 
 
